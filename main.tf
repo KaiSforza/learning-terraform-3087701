@@ -61,12 +61,12 @@ module "blog-alb" {
       backend_protocol = "HTTP"
       backend_port     = 80
       target_type      = "instance"
-      # targets = {
-      #   my_target = {
-      #     target_id = aws_instance.blog.id
-      #     port = 80
-      #   }
-      # }
+      targets = {
+        my_target = {
+          target_id = aws_instance.blog.id
+          port = 80
+        }
+      }
     }
   }
 
@@ -75,6 +75,9 @@ module "blog-alb" {
       port     = 80
       protocol = "HTTP"
       target_group_key = "blog"
+      forward = {
+        target_group_key = "blog"
+      }
     }
   }
 
