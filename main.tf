@@ -56,27 +56,25 @@ module "blog-alb" {
   security_groups = [module.blog_sg.security_group_id]
 
   target_groups = {
-    ex-instance = {
+    blog = {
       name_prefix      = "blog-"
       backend_protocol = "HTTP"
       backend_port     = 80
       target_type      = "instance"
-      targets = {
-        my_target = {
-          target_id = aws_instance.blog.id
-          port = 80
-        }
-      }
+      # targets = {
+      #   my_target = {
+      #     target_id = aws_instance.blog.id
+      #     port = 80
+      #   }
+      # }
     }
   }
 
   listeners = {
-    ex-http = {
+    blog-http = {
       port     = 80
       protocol = "HTTP"
-      forward = {
-        target_group_key = "ex-instance"
-      }
+      target_group_key = "blog"
     }
   }
 
